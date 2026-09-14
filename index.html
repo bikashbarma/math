@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>BIKASH ACADEMY — Waste & Waste Management Mock Test</title>
+<style>
+:root{--bg:#000;--panel:#0b0b10;--text:#f5f7ff;--muted:#a8adbd;--neon:#00eaff;--green:#20ff72;--red:#ff3158;--gold:#ffd45a}
+*{box-sizing:border-box}html,body{margin:0;background:#000;color:var(--text);font-family:Arial,system-ui,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 20%,#102a38 0,transparent 35%),radial-gradient(circle at 10% 90%,#17051b 0,transparent 30%);opacity:.55}
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}.p{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.35;animation:float linear infinite}
+@keyframes float{from{transform:translateY(105vh)}to{transform:translateY(-10vh)}}
+.app{position:relative;z-index:1;min-height:100svh}.top{height:64px;display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;padding:8px 12px;position:sticky;top:0;z-index:20;background:#000d;border-bottom:1px solid #26313c;backdrop-filter:blur(10px)}
+.top button,.btn{border:1px solid #3c4c5c;background:linear-gradient(#18222c,#080c11);color:#fff;border-radius:12px;padding:11px 15px;font-weight:900;cursor:pointer;box-shadow:0 5px 0 #020305,0 0 15px #00eaff20}.top .left{text-align:left}.top .right{text-align:right}.top .center{text-align:center}.top button{font-size:12px}.correctBox{appearance:none;border:2px solid var(--green);background:#020507;color:var(--green);border-radius:12px;font-weight:1000;font-size:17px;padding:7px 14px;min-width:112px;cursor:pointer;text-shadow:0 0 10px #20ff72;box-shadow:0 0 12px #20ff7233,inset 0 0 10px #20ff7215;position:relative;z-index:20;transition:.18s transform,.18s box-shadow}.correctBox:active{transform:scale(.94)}.correctBox.flash{animation:correctPulse .45s ease}@keyframes correctPulse{50%{transform:scale(1.12);box-shadow:0 0 28px var(--green)}}.timer{font-variant-numeric:tabular-nums;color:#20ff72;font-size:22px;margin-top:2px;font-weight:1000;text-shadow:0 0 12px #20ff72}.timer.warning{color:#ff3158;text-shadow:0 0 12px #ff3158;animation:timerBlink .55s steps(2,end) infinite}@keyframes timerBlink{50%{opacity:.28;transform:scale(1.05)}}
+.screen{min-height:calc(100svh - 64px);display:flex;align-items:center;justify-content:center;padding:16px}.startCard,.resultCard,.adminCard{width:min(760px,96vw);background:linear-gradient(145deg,#10151d,#050608);border:1px solid #30404d;border-radius:24px;padding:28px;box-shadow:0 20px 70px #000,0 0 35px #00eaff14}.brand{text-align:center;font-weight:1000;letter-spacing:2px;font-size:clamp(30px,7vw,62px);color:#fff;text-shadow:0 0 15px #00eaff,0 0 35px #00eaff55}.label{display:block;font-weight:900;margin:28px 0 10px;font-size:18px}.name{width:100%;padding:17px;border-radius:14px;border:1px solid #44515d;background:#020305;color:#fff;font-size:19px;outline:none}.name:focus{border-color:var(--neon);box-shadow:0 0 18px #00eaff33}.startBtn{width:100%;margin-top:16px;padding:17px;border:0;border-radius:15px;background:linear-gradient(180deg,#00eaff,#007dff);color:#001018;font-weight:1000;font-size:18px;box-shadow:0 7px 0 #003b66,0 0 25px #00eaff55}
+.book{width:min(1050px,98vw);min-height:calc(100svh - 92px);display:flex;align-items:center;justify-content:center;padding:10px}.page{position:relative;width:100%;min-height:min(760px,calc(100svh - 100px));background:linear-gradient(90deg,#e8dfca,#fffdf5 8%,#fffdf5 92%,#ddd1b9);color:#151515;border-radius:12px 20px 20px 12px;padding:22px 20px 18px;box-shadow:inset 16px 0 25px #0002,inset -3px 0 8px #0001,0 20px 55px #000;transform-origin:left center;perspective:1200px}.page:after{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;background:#8d806a22;box-shadow:0 0 18px #0003}.turnNext{animation:flipNext .55s ease}.turnPrev{animation:flipPrev .55s ease}@keyframes flipNext{0%{transform:perspective(1200px) rotateY(0);opacity:1}45%{transform:perspective(1200px) rotateY(-18deg);box-shadow:15px 15px 35px #0008}100%{transform:perspective(1200px) rotateY(0);opacity:1}}@keyframes flipPrev{0%{transform:perspective(1200px) rotateY(0)}45%{transform:perspective(1200px) rotateY(18deg);box-shadow:-15px 15px 35px #0008}100%{transform:perspective(1200px) rotateY(0)}}
+.led{position:relative;overflow:hidden;border-radius:8px;background:#030504;border:3px solid #171b1f;padding:0;margin-bottom:12px;white-space:nowrap;box-shadow:inset 0 0 22px #000,0 0 12px #0008;height:clamp(64px,15vw,105px);display:flex;align-items:center}
+.led:before{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(circle,#18ff6a 0 1px,transparent 1.8px);background-size:5px 5px;opacity:.12}
+.marquee{display:inline-flex;align-items:center;min-width:max-content;animation:ledScroll 13s linear infinite;will-change:transform}
+.marquee span{display:inline-block;font-family:"Courier New",monospace;font-size:clamp(30px,7vw,62px);font-weight:1000;letter-spacing:clamp(2px,1vw,8px);line-height:1;color:#39ff78;padding:0 28px;text-shadow:0 0 4px #20ff72,0 0 12px #20ff72,0 0 30px #20ff7255}
+.marquee .sep{font-size:clamp(24px,5vw,46px);padding:0 8px}
+@keyframes ledScroll{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
+.meta{display:flex;justify-content:space-between;gap:10px;font-weight:1000;margin-bottom:14px}.qtext{font-size:clamp(18px,2.5vw,25px);line-height:1.48;font-weight:900;margin:8px 0 18px}.options{display:grid;gap:10px}.opt{touch-action:manipulation;display:flex;align-items:flex-start;gap:10px;padding:13px;border:2px solid #bbb29e;border-radius:12px;background:#fff;color:#111;font-weight:800;font-size:clamp(16px,2.2vw,20px);cursor:pointer;text-align:left}.opt input{margin-top:5px;accent-color:#008cff;transform:scale(1.2)}.opt.selected{border-color:#007dff;box-shadow:0 0 0 2px #007dff22}.opt.correct{background:#bfffd1;border-color:#00a943}.opt.wrong{background:#ffc3cd;border-color:#e00035}.feedback{text-align:center;min-height:66px;padding:9px;font-weight:1000}.feedback .msg{font-size:18px;color:#00752f}.feedback .sol{font-size:14px;color:#4b1017}.continue{touch-action:manipulation;width:100%;padding:16px;border:0;border-radius:14px;background:linear-gradient(#333,#111);color:#fff;font-size:19px;font-weight:1000;box-shadow:0 7px 0 #000;cursor:pointer}.continue.good{background:linear-gradient(#21ff73,#07983e);color:#001b0a}.continue.bad{background:linear-gradient(#ff496c,#a80025);color:#fff}.continue:disabled{opacity:.45;cursor:not-allowed}
+.continue:active{transform:translateY(4px) scale(.985);box-shadow:0 2px 0 #000;filter:brightness(1.18)}
+.continue.pulse{animation:continuePulse .28s ease}
+@keyframes continuePulse{0%{transform:scale(1)}45%{transform:scale(.96) rotate(-.6deg)}100%{transform:scale(1)}}
+.revisionIntro{animation:revIn .55s ease}
+@keyframes revIn{from{opacity:0;transform:translateY(20px) scale(.96)}to{opacity:1;transform:none}}
+.progress{height:7px;background:#171b22;border-radius:10px;overflow:hidden;margin:10px 0}.progress i{display:block;height:100%;background:linear-gradient(90deg,#00eaff,#20ff72);box-shadow:0 0 12px #00eaff;transition:width .35s}.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;font-weight:900}.stat{padding:8px 12px;border:1px solid #33414d;border-radius:10px;background:#080b0f}.resultGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:20px 0}.r{padding:13px;border:1px solid #33414d;border-radius:12px;background:#070a0e}.r b{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.review{margin-top:18px;display:grid;gap:10px;max-height:48vh;overflow:auto}.reviewItem{background:#090c11;border:1px solid #293541;border-radius:12px;padding:12px}.adminList{max-height:55vh;overflow:auto}.adminRow{border:1px solid #2c3945;border-radius:12px;padding:10px;margin:8px 0;background:#080b0f}.adminTools{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.adminTools .btn{flex:1}.small{font-size:12px;color:var(--muted)}textarea{width:100%;min-height:90px;background:#020305;color:#fff;border:1px solid #384550;border-radius:10px;padding:10px}.editQ{margin:12px 0;padding:14px;border:1px solid #303c47;border-radius:12px}.editQ input{width:100%;padding:9px;margin:5px 0;background:#020305;color:#fff;border:1px solid #394650;border-radius:8px}.hidden{display:none!important}
+.altTheme{--panel:#100916!important}.altTheme .page{background:linear-gradient(90deg,#e9ddc7,#fffaf0 8%,#fffaf0 92%,#d9cbb0)}.altTheme .brand{text-shadow:0 0 15px #ff4dff,0 0 35px #ff4dff55}.altTheme .marquee span{color:#ff65ff;text-shadow:0 0 3px #ff4dff,0 0 9px #ff4dff,0 0 18px #ff4dff55}
+.fireworks{position:fixed;inset:0;pointer-events:none;z-index:100}.burst{position:absolute;left:50%;top:50%;width:12px;height:12px;border-radius:50%;transform:translate(-50%,-50%);animation:explode .9s ease-out forwards;filter:drop-shadow(0 0 8px currentColor)}@keyframes explode{0%{box-shadow:0 0 #fff;opacity:1;transform:translate(-50%,-50%) scale(.4)}100%{opacity:0;transform:translate(-50%,-50%) scale(1);box-shadow:0 -190px 0 currentColor,70px -175px 0 currentColor,135px -135px 0 currentColor,175px -70px 0 currentColor,190px 0 0 currentColor,175px 70px 0 currentColor,135px 135px 0 currentColor,70px 175px 0 currentColor,0 190px 0 currentColor,-70px 175px 0 currentColor,-135px 135px 0 currentColor,-175px 70px 0 currentColor,-190px 0 0 currentColor,-175px -70px 0 currentColor,-135px -135px 0 currentColor,-70px -175px 0 currentColor}}
+.resultHeader,.resultRow{display:grid;grid-template-columns:.7fr 1fr 1.2fr 1.1fr 1.8fr;gap:8px;align-items:center}.resultHeader{font-size:12px;color:var(--muted);text-transform:uppercase}.resultRow{font-size:14px}.resultRow span,.resultHeader b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.resultRow span{text-align:center}.resultHeader b{text-align:center}@media(max-width:600px){.resultHeader,.resultRow{grid-template-columns:.55fr .8fr 1fr 1fr 1.35fr;gap:4px}.resultRow{font-size:12px}.resultHeader{font-size:10px}}
+@media print{.top,#particles{display:none!important}.screen{min-height:auto}.resultCard{box-shadow:none}}
+@media(max-width:600px){.top{height:58px;padding:6px}.top button{padding:9px 8px}.correctBox{font-size:14px;min-width:94px}.timer{font-size:18px}.screen{padding:10px}.startCard{padding:22px}.page{min-height:calc(100svh - 82px);padding:15px 12px 12px}.qtext{font-size:18px}.opt{padding:10px;font-size:16px}.resultGrid{grid-template-columns:repeat(2,1fr)}.book{padding:4px}}
+
+/* ROBUST THEME */
+body.lightTheme{background:#eef3f8!important;color:#101522!important}
+body.lightTheme .panel,body.lightTheme .card,body.lightTheme .book,
+body.lightTheme .question-card,body.lightTheme .admin-box,body.lightTheme .result-box{
+ background:rgba(255,255,255,.96)!important;color:#101522!important;
+}
+body.lightTheme .question,body.lightTheme .option,body.lightTheme label,
+body.lightTheme p,body.lightTheme h1,body.lightTheme h2,body.lightTheme h3,
+body.lightTheme .stat{color:#101522!important}
+.themeBtn.themeActive{transform:scale(1.06);filter:brightness(1.25);box-shadow:0 0 22px #00ffd0}
+
+/* FULL DISPLAY THEME */
+body.lightTheme,
+body.lightTheme #app,
+body.lightTheme .app,
+body.lightTheme .screen,
+body.lightTheme .examScreen,
+body.lightTheme .exam,
+body.lightTheme main{
+  background:#f4f7fb !important;
+  color:#111827 !important;
+}
+body.lightTheme .book,
+body.lightTheme .bookPage,
+body.lightTheme .page,
+body.lightTheme .questionPage,
+body.lightTheme .question-card,
+body.lightTheme .questionCard,
+body.lightTheme .question-area,
+body.lightTheme .questionArea,
+body.lightTheme .options,
+body.lightTheme .option,
+body.lightTheme .optionCard,
+body.lightTheme .card,
+body.lightTheme .panel,
+body.lightTheme .content{
+  background:#ffffff !important;
+  color:#111827 !important;
+  border-color:#cbd5e1 !important;
+  box-shadow:0 10px 35px rgba(15,23,42,.10) !important;
+}
+body.lightTheme .question,
+body.lightTheme .questionText,
+body.lightTheme .questionNo,
+body.lightTheme .option,
+body.lightTheme .optionText,
+body.lightTheme label,
+body.lightTheme .page *,
+body.lightTheme .questionPage *{
+  color:#111827 !important;
+}
+body.lightTheme .option:hover{background:#eef6ff !important}
+body.lightTheme .led-display, body.lightTheme .ledDisplay{
+  background:#050505 !important;
+  color:#00ffd0 !important;
+}
+body.lightTheme .led-display *, body.lightTheme .ledDisplay *{
+  color:#00ffd0 !important;
+}
+body:not(.lightTheme) .book,
+body:not(.lightTheme) .bookPage,
+body:not(.lightTheme) .page,
+body:not(.lightTheme) .questionPage,
+body:not(.lightTheme) .question-card,
+body:not(.lightTheme) .questionCard,
+body:not(.lightTheme) .question-area,
+body:not(.lightTheme) .questionArea,
+body:not(.lightTheme) .content{
+  background:#05070b !important;
+  color:#f5f7ff !important;
+}
+body:not(.lightTheme) .question,
+body:not(.lightTheme) .questionText,
+body:not(.lightTheme) .questionNo,
+body:not(.lightTheme) .option,
+body:not(.lightTheme) .optionText,
+body:not(.lightTheme) label{
+  color:#f5f7ff !important;
+}
+
+
+/* FINAL THEME + CORRECT BUTTON FIX */
+.correctBox{
+  min-width:148px !important;
+  padding:11px 20px !important;
+  font-size:18px !important;
+  line-height:1.05 !important;
+  border:2px solid #20ff72 !important;
+  background:linear-gradient(180deg,#20ff72,#07983e) !important;
+  color:#001b0a !important;
+  text-shadow:none !important;
+  box-shadow:0 5px 0 #045c25,0 0 22px #20ff7255,inset 0 1px 0 #ffffff66 !important;
+}
+.correctBox:active{transform:translateY(3px) scale(.96) !important;box-shadow:0 2px 0 #045c25,0 0 18px #20ff7255 !important}
+body.lightTheme .page{background:#ffffff !important;color:#111827 !important}
+body.lightTheme .opt{background:#ffffff !important;color:#111827 !important;border-color:#cbd5e1 !important}
+body.lightTheme .opt.selected{background:#eef6ff !important;color:#111827 !important}
+body.lightTheme .opt.correct{background:#bfffd1 !important;color:#062b12 !important;border-color:#00a943 !important}
+body.lightTheme .opt.wrong{background:#ffc3cd !important;color:#3b0010 !important;border-color:#e00035 !important}
+body:not(.lightTheme) .page{background:#05070b !important;color:#f5f7ff !important}
+body:not(.lightTheme) .opt{background:#0d1219 !important;color:#f5f7ff !important;border-color:#35414d !important}
+body:not(.lightTheme) .opt.selected{background:#101d2c !important;color:#ffffff !important;border-color:#00a8ff !important}
+body:not(.lightTheme) .opt.correct{background:#0b3a20 !important;color:#d9ffe6 !important;border-color:#20ff72 !important}
+body:not(.lightTheme) .opt.wrong{background:#45101b !important;color:#ffe0e6 !important;border-color:#ff3158 !important}
+body:not(.lightTheme) .opt input{color-scheme:dark}
+@media(max-width:600px){.correctBox{min-width:132px !important;padding:10px 14px !important;font-size:16px !important}}
+
+/* USER FINAL POLISH: neutral CORRECT button + green word + red LED text in light theme */
+.correctBox{
+  background:#05070b !important;
+  border:2px solid #6b7280 !important;
+  color:#20ff72 !important;
+  box-shadow:0 4px 0 #111827,0 0 14px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08) !important;
+}
+.correctBox .correctWord{color:#20ff72 !important;text-shadow:0 0 10px #20ff72 !important;}
+.correctBox #correctTop{color:#ffffff !important;text-shadow:none !important;}
+body.lightTheme .correctBox{background:#ffffff !important;border-color:#9ca3af !important;color:#20a957 !important;box-shadow:0 4px 0 #9ca3af,0 5px 16px rgba(0,0,0,.12) !important;}
+body.lightTheme .correctBox .correctWord{color:#16a34a !important;text-shadow:none !important;}
+body.lightTheme .correctBox #correctTop{color:#111827 !important;}
+body.lightTheme .marquee span{color:#ef233c !important;text-shadow:0 0 4px #ef233c,0 0 12px #ef233c,0 0 26px rgba(239,35,60,.35) !important;}
+body.lightTheme .marquee .sep{color:#ef233c !important;}
+
+</style>
+</head>
+<body>
+<div id="particles"></div><div id="fireworks" class="fireworks"></div>
+<div class="app">
+<header class="top">
+<div class="left"><button id="themeBtn">☾ THEME</button></div>
+<div class="center"><button class="correctBox" id="correctBtn" type="button"><span class="correctWord">CORRECT</span> <span id="correctTop">0</span></button><div class="timer" id="timer">15:00</div></div>
+<div class="right"><button id="adminBtn">ADMIN PORTAL</button></div>
+</header>
+<main id="root"></main>
+</div>
+<script>
+const QUESTIONS=[
+["What is generally meant by waste?",["All natural substances","Unwanted or discarded materials after use","Only solid materials","Only industrial materials"],1],
+["Which of the following is a biodegradable waste?",["Glass","Plastic","Vegetable peels","Aluminium"],2],
+["Which of the following is a non-biodegradable waste?",["Fruit peels","Dry leaves","Paper","Glass"],3],
+["Which of the following is NOT included in the 3R principle?",["Reduce","Reuse","Recycle","Remove"],3],
+["What does Reduce mean?",["Reuse","Reducing the quantity of waste","Burning waste","Burying waste in the soil"],1],
+["Reuse means—",["Using the same item again","Destroying waste","Separating waste","Burning waste"],0],
+["What is meant by Recycle?",["Dumping waste into rivers","Processing waste again to produce usable materials","Burying waste","Burning waste"],1],
+["Vegetable peels from the kitchen are what type of waste?",["Organic waste","E-waste","Radioactive waste","Metallic waste"],0],
+["What is the full form of E-waste?",["Environmental Waste","Electronic Waste","Energy Waste","Ecological Waste"],1],
+["Which of the following is an example of e-waste?",["Old mobile phone","Vegetable peels","Sawdust","Dry leaves"],0],
+["What is the primary function of a Scrubber?",["To convert solid waste into manure","To remove pollutants from gaseous emissions","To melt plastic","To decompose organic waste"],1],
+["Electrostatic Precipitator (ESP) is mainly effective in controlling which pollutant?",["Noise","Fine particulate matter in air","Aquatic microorganisms","Organic waste"],1],
+["What is the major similarity between a Bag Filter and an ESP?",["Both treat water","Both are used to remove particulate pollutants from gas streams","Both produce compost","Both burn waste"],1],
+["Cyclone Separator mainly works on which principle?",["Separation by gravity and rotational motion","Organic decomposition","Electrolysis","Photochemical reaction"],0],
+["One major advantage of Incineration is—",["Significant reduction in the volume of waste","Complete elimination of all types of pollution","No residue is produced","No energy is required"],0],
+["What is the most important environmental precaution in Incineration?",["Controlling the gaseous emissions produced","Determining only the colour of the waste","Increasing the weight of the waste","Conserving rainwater"],0],
+["A characteristic feature of Pyrolysis is—",["Combustion in the presence of abundant oxygen","Thermal decomposition in the absence or very limited presence of oxygen","Decomposition of waste only in an aqueous environment","Breaking down waste only with the help of sunlight"],1],
+["What can generally be produced during Gasification?",["Syngas","Only oxygen","Only water","Only nitrogen"],0],
+["In Anaerobic Digestion—",["Oxygen is essential","Microorganisms break down organic matter in the absence of oxygen","Only inorganic waste is used","No gas is produced"],1],
+["Which gas is mainly present in the biogas produced from Anaerobic Digestion?",["Oxygen","Methane","Ozone","Nitrogen dioxide"],1],
+["Which plays the primary role in Vermicomposting?",["No organism other than bacteria","Earthworms","Fish","Only fungi"],1],
+["Which of the following is an example of Waste-to-Energy?",["Generating electricity from waste","Dumping waste into rivers","Burning waste in the open","Burying waste in the soil"],0],
+["What is meant by Refuse-Derived Fuel (RDF)?",["Drinking water produced from waste","Fuel produced by processing combustible waste","Organic manure produced from waste","Oxygen produced from waste"],1],
+["Which of the following is NOT included in the ‘3R’ of waste management?",["Reduce","Reuse","Recycle","Recover"],3],
+["What is the objective of ‘Repair’ in the 8R principle?",["To quickly discard usable items","To repair damaged items and extend their useful life","To burn all waste","To send waste to a landfill"],1],
+["What is the main idea behind the ‘Rethink’ principle?",["Buying more products","Thinking about alternative uses before discarding an item","Burning all waste","Only recycling waste"],1],
+["Which of the following is most closely associated with Extended Producer Responsibility (EPR)?",["Consumers have no responsibility","Producers are responsible for managing waste after the use of their products","Only municipalities are responsible","Only waste collectors are responsible"],1],
+["What is the primary function of a Material Recovery Facility (MRF)?",["Sorting and recovering reusable materials from waste","Only burning waste","Only burying waste","Only treating liquid waste"],0],
+["Which of the following pairs is correct?",["Scrubber — Solid waste composting","ESP — Removal of particulate pollutants","Composting — Melting metals","Landfill — Gas purification"],1],
+["Which of the following is most closely associated with ‘Waste Minimization’?",["Planning to reduce waste from the very beginning of production","Increasing the amount of waste generated","Dumping all waste in one place","Burning waste in the open"],0],
+["Consider the following statements:\n1. Organic waste can be converted into compost.\n2. All types of plastic are easily biodegradable.\n3. Source Segregation makes recycling easier.\nWhich of the following is correct?",["1 and 2","1 and 3","2 and 3","1, 2 and 3"],1],
+["Consider the following statements:\n1. The objective of the Reduce principle is to decrease waste generation.\n2. Reuse involves using an item again.\n3. In Recycling, waste may be converted into new materials or products.",["Only 1","1 and 2","2 and 3","1, 2 and 3"],3],
+["Which of the following are air pollution control technologies?\n1. Scrubber\n2. ESP\n3. Bag Filter\n4. Composting",["1 and 2","1, 2 and 3","2, 3 and 4","1, 2, 3 and 4"],1],
+["Which of the following are associated with organic waste management?\n1. Composting\n2. Vermicomposting\n3. Anaerobic Digestion\n4. Biomethanation",["1 and 2","2 and 3","1, 2 and 3","1, 2, 3 and 4"],3],
+["Which of the following statements is correct?",["Leachate is generally clean drinking water","Leachate can be generated from a landfill","Leachate is generated only in industries","Leachate has no relation to groundwater pollution"],1],
+["Match List-I with List-II:\nList-I\na. Scrubber\nb. Composting\nc. ESP\nd. Anaerobic Digestion\nList-II\n1. Biogas production\n2. Removal of particulate pollutants\n3. Control of gaseous pollutants\n4. Production of organic manure",["a-3, b-4, c-2, d-1","a-2, b-3, c-4, d-1","a-4, b-1, c-2, d-3","a-1, b-4, c-3, d-2"],0],
+["Select the correctly matched pairings:\na. Pyrolysis — 1. Thermal decomposition in limited/absent oxygen\nb. Gasification — 2. Production of fuel gas\nc. Landfill — 3. Designated site for waste disposal\nd. RDF — 4. Waste-derived fuel",["a-1, b-2, c-3, d-4","a-2, b-1, c-4, d-3","a-3, b-2, c-1, d-4","a-4, b-3, c-2, d-1"],0],
+["Assertion (A): Waste segregation helps make recycling effective.\nReason (R): When different types of waste are kept separate, it becomes easier to recover useful materials.",["Both A and R are true, and R is the correct explanation of A","Both A and R are true, but R is not the correct explanation of A","A is true, but R is false","A is false, but R is true"],0],
+["Assertion (A): Leachate is an important environmental problem in landfills.\nReason (R): Leachate can carry pollutants into groundwater.",["Both A and R are true, and R is the correct explanation of A","Both A and R are true, but R is not the correct explanation of A","A is true, but R is false","A is false, but R is true"],0],
+["Assertion (A): Circular Economy can help reduce waste generation.\nReason (R): It emphasizes extending the useful life of products and materials, along with reuse and recycling.",["Both A and R are true, and R is the correct explanation of A","Both A and R are true, but R is not the correct explanation of A","A is true, but R is false","A is false, but R is true"],0],
+["In a city, kitchen waste, plastic and glass are being thrown into the same container. Which should be the first and most effective step?",["Incinerate all the waste","Introduce source segregation of waste","Send all the waste to a landfill","Ban only plastic"],1],
+["A factory chimney is emitting a large amount of fine particulate matter. Which technology would be most appropriate?",["Composting","ESP","Vermicomposting","Anaerobic Digestion"],1],
+["A municipality generates a large amount of food waste and also needs to produce energy. Which method would be comparatively suitable?",["Anaerobic Digestion","Landfilling only","Open dumping","Glass recycling"],0],
+["An old wooden box is converted into a bookshelf. Which concept does this represent?",["Downcycling","Repurpose","Incineration","Landfilling"],1],
+["An old machine was repaired and used for several more years. Which 8R principle is the best example of this?",["Refuse","Repair","Recover","Rethink"],1]
+];
+const compliments=["GOOD START","GETTING BETTER","GETTING IMPRESSIVE","GOOD GOING, KEEP IT UP","THAT'S A HAT-TRICK","SUPERB, YOU ARE FINE","YOU ARE ON A WINNING STREAK!","YOU ARE A MASTER","BIKASH IS IMPRESSED BY YOUR PERFORMANCE","BIKASH IS FIDA","YOU ARE GENIUS","YOU ARE SO TALENTED","BRILLIANT WORK","EXCELLENT PROGRESS","OUTSTANDING!"];
+let state={name:"",i:0,answers:Array(QUESTIONS.length).fill(null),correct:0,started:false,startAt:0,endAt:0,revision:false,wrong:[],ri:0,revisionAnswers:{}};
+const root=document.getElementById("root"), timerEl=document.getElementById("timer"), correctTop=document.getElementById("correctTop");
+function makeParticles(){for(let i=0;i<55;i++){let p=document.createElement("i");p.className="p";p.style.left=Math.random()*100+"%";p.style.animationDuration=(7+Math.random()*13)+"s";p.style.animationDelay=(-Math.random()*15)+"s";document.getElementById("particles").appendChild(p)}} makeParticles();
+function beep(ok){let c=new AudioContext(),o=c.createOscillator(),g=c.createGain();o.type=ok?"triangle":"sawtooth";o.frequency.setValueAtTime(ok?660:170,c.currentTime);o.frequency.exponentialRampToValueAtTime(ok?1180:70,c.currentTime+.35);g.gain.setValueAtTime(.0001,c.currentTime);g.gain.exponentialRampToValueAtTime(.9,c.currentTime+.015);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.55);o.connect(g).connect(c.destination);o.start();o.stop(c.currentTime+.58)}
+function fireworks(ok){const box=document.getElementById("fireworks");box.innerHTML="";let b=document.createElement("i");b.className="burst";b.style.color=ok?"#20ff72":"#ff3158";box.appendChild(b);setTimeout(()=>box.innerHTML="",1100)}
+function startScreen(){root.innerHTML=`<section class="screen"><div class="startCard"><div class="brand">MOCK TEST</div><label class="label">Candidate Name</label><input id="candidate" class="name" autocomplete="name"><button id="start" class="startBtn">EXAM START</button></div></section>`;document.getElementById("start").onclick=()=>{let n=document.getElementById("candidate").value.trim();if(!n)return;state.name=n;state.started=true;state.startAt=Date.now();state.endAt=Date.now()+15*60*1000;state.i=0;state.answers.fill(null);state.correct=0;state.wrong=[];renderQuestion();tick()}}
+function paintTimer(){let left=Math.max(0,state.endAt-Date.now());timerEl.textContent=fmt(Math.ceil(left/1000));timerEl.classList.toggle("warning",left<=5*60*1000&&left>0);return left}
+function tick(){clearInterval(window.__t);paintTimer();window.__t=setInterval(()=>{let left=paintTimer();if(left<=0){clearInterval(window.__t);finishExam()}},250)}
+function renderQuestion(){
+let qIndex=state.revision?state.wrong[state.ri]:state.i,q=QUESTIONS[qIndex];
+let ans=state.revision ? (state.revisionAnswers[qIndex] ?? null) : state.answers[qIndex];
+let locked=state.revision ? (state.revisionAnswers[qIndex] !== undefined) : (state.answers[qIndex]!==null);
+root.innerHTML=`<div class="book revisionIntro"><section class="page" id="page">
+<div class="led"><div class="marquee"><span>BIKASH ACADEMY</span><span class="sep">✦</span><span>DIGITAL MOCK TEST</span><span class="sep">✦</span><span>BIKASH ACADEMY</span><span class="sep">✦</span><span>DIGITAL MOCK TEST</span></div></div>
+<div class="meta"><span>Question ${qIndex+1} / ${QUESTIONS.length}</span><span>${state.revision?"REVISION TEST":"MOCK TEST"}</span></div>${state.revision?`<div style="text-align:center;font-weight:1000;color:#c0002d;margin:4px 0 10px;text-shadow:0 0 8px #ff315855">✦ WRONG ANSWERS — TRY AGAIN ✦</div>`:""}
+<div class="progress"><i style="width:${state.revision?((state.ri+1)/Math.max(1,state.wrong.length))*100:((state.i+1)/QUESTIONS.length)*100}%"></i></div>
+<div class="qtext">${q[0]}</div>
+<div class="options">${q[1].map((x,j)=>`<label class="opt ${ans!==null&&j===ans?"selected":""} ${locked&&j===q[2]?"correct":""} ${locked&&ans!==q[2]&&j===ans?"wrong":""}">
+<input type="radio" name="a" value="${j}" ${ans!==null&&j===ans?"checked":""} ${locked?"disabled":""}>${String.fromCharCode(65+j)}) ${x}</label>`).join("")}</div>
+<div class="feedback" id="feedback">${locked?feedback(qIndex,ans):""}</div>
+<button class="continue ${locked?(ans===q[2]?"good":"bad"):""}" id="cont" ${locked?"":"disabled"}>${state.revision&&state.ri===state.wrong.length-1?"END REVISION":"CONTINUE"}</button>
+</section></div>`;
+document.querySelectorAll(".opt input").forEach(inp=>inp.onchange=()=>answer(qIndex,+inp.value));
+document.getElementById("cont").onclick=()=>{
+let b=document.getElementById("cont");
+if(navigator.vibrate) navigator.vibrate([18,12,28]);
+b.classList.remove("pulse"); void b.offsetWidth; b.classList.add("pulse");
+setTimeout(()=>next(),120);
+};
+paintTimer()
+}
+function feedback(qi,a){if(a===QUESTIONS[qi][2])return `<div class="msg">${compliments[Math.min(state.correct-1,compliments.length-1)]||"GOOD START"}<br>YOUR CORRECT ${state.correct} OUT OF ${QUESTIONS.length}</div>`;return `<div class="sol">Incorrect. Correct Answer: ${String.fromCharCode(65+QUESTIONS[qi][2])}) ${QUESTIONS[qi][1][QUESTIONS[qi][2]]}</div>`}
+function updateCorrectCounter(){correctTop.textContent=state.correct}
+function answer(qi,a){
+if(state.revision){
+if(state.revisionAnswers[qi]!==undefined)return;
+state.revisionAnswers[qi]=a;
+beep(a===QUESTIONS[qi][2]); fireworks(a===QUESTIONS[qi][2]);
+renderQuestion();
+return;
+}
+if(state.answers[qi]!==null)return;
+if(navigator.vibrate) navigator.vibrate(12); state.answers[qi]=a;
+if(a===QUESTIONS[qi][2])state.correct++;else state.wrong.push(qi);
+beep(a===QUESTIONS[qi][2]);fireworks(a===QUESTIONS[qi][2]);
+renderQuestion()
+}
+function next(){if(state.revision){if(state.ri<state.wrong.length-1){state.ri++;renderQuestion()}else finishRevision();return}if(state.i<QUESTIONS.length-1){state.i++;renderQuestion()}else finishExam()}
+function finishExam(){
+clearInterval(window.__t);
+if(state.wrong.length>0){
+state.revision=true;
+state.ri=0;
+state.revisionAnswers={};
+renderQuestion();
+return;
+}
+finishResult()
+}
+function finishRevision(){
+state.revision=false;
+finishResult()
+}
+function finishResult(){clearInterval(window.__t);timerEl.style.display="none";let attempted=state.answers.filter(x=>x!==null).length,incorrect=attempted-state.correct,un=QUESTIONS.length-attempted,score=state.correct,used=Math.min(15*60,Math.floor((Date.now()-state.startAt)/1000));let pct=(score/QUESTIONS.length*100).toFixed(2);saveResult({name:state.name,score,pct,correct:state.correct,incorrect,attempted,unanswered:un,timeUsed:fmt(used),completed:new Date().toLocaleString()});root.innerHTML=`<section class="screen"><div class="resultCard"><div class="brand">RESULT</div><h2>${esc(state.name)}</h2><div class="resultGrid">${r("Total Questions",QUESTIONS.length)}${r("Attempted",attempted)}${r("Correct",state.correct)}${r("Incorrect",incorrect)}${r("Unanswered",un)}${r("Score",score)}${r("Percentage",pct+"%")}${r("Time Used",fmt(used))}</div><button class="btn" id="review">ANSWER REVIEW</button><div class="review" id="reviewBox"></div></div></section>`;document.getElementById("review").onclick=()=>{let box=document.getElementById("reviewBox");box.innerHTML=QUESTIONS.map((q,i)=>`<div class="reviewItem"><b>Q${i+1}. ${esc(q[0])}</b><br>Candidate's Answer: ${state.answers[i]===null?"Unanswered":esc(q[1][state.answers[i]])}<br>Correct Answer: ${esc(q[1][q[2]])}<br><strong>${state.answers[i]===q[2]?"CORRECT":"WRONG"}</strong></div>`).join("")}}
+function r(a,b){return `<div class="r"><b>${a}</b>${b}</div>`}function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}function esc(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+const SCOREBOARD_URL="https://script.google.com/macros/s/AKfycbxmbDKNveQK46BYoCDN0Yu47SX_-jg0-bmXFsCJjwIUswyUvnnamuow93sfHIxJqz4yrQ/exec";
+function saveResult(x){
+  let a=JSON.parse(localStorage.getItem("bikash_results")||"[]");
+  a.unshift({...x,rank:a.length+1});
+  localStorage.setItem("bikash_results",JSON.stringify(a));
+  try{
+    const data=new URLSearchParams();
+    data.append("candidateName",x.name);
+    data.append("score",x.score);
+    data.append("timeUsed",x.timeUsed);
+    data.append("percentage",x.pct);
+    data.append("date",x.completed);
+    data.append("action","submitResult");
+    fetch(SCOREBOARD_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body:data.toString(),keepalive:true}).catch(()=>{});
+  }catch(e){}
+}
+function admin(){root.innerHTML=`<section class="screen"><div class="adminCard"><div class="brand" style="font-size:38px">ADMIN PORTAL</div><div id="alog"><label class="label">Admin Password</label><input id="pw" class="name" type="password"><button class="startBtn" id="login">LOGIN</button></div><div id="dash" class="hidden"></div></div></section>`;document.getElementById("login").onclick=()=>{if(document.getElementById("pw").value!=="Bikash@420"){alert("Incorrect password");return}dashboard()}}
+function dashboard(){let d=document.getElementById("dash");d.classList.remove("hidden");document.getElementById("alog").classList.add("hidden");d.innerHTML=`<div class="adminTools"><button class="btn" id="refresh">REFRESH RESULTS</button><button class="btn" id="csv">DOWNLOAD RESULTS CSV</button><button class="btn" id="print">PRINT / SAVE PDF REPORT</button><button class="btn" id="clear">CLEAR ALL RESULTS</button><button class="btn" id="edit">EDIT QUESTION / ANSWER KEY</button></div><div class="adminList" id="list"></div><div id="editor"></div>`;loadResults();document.getElementById("refresh").onclick=loadResults;document.getElementById("clear").onclick=()=>{if(confirm("Are you sure you want to delete all candidate results?")){localStorage.removeItem("bikash_results");loadResults()}};document.getElementById("csv").onclick=downloadCSV;document.getElementById("print").onclick=()=>window.print();document.getElementById("edit").onclick=editor}
+function loadResults(){let a=JSON.parse(localStorage.getItem("bikash_results")||"[]"),l=document.getElementById("list");l.innerHTML=a.length?`<div class="adminRow resultHeader"><b>Rank</b><b>Candidate Name</b><b>Score</b><b>Time Used</b><b>Percentage</b><b>Date</b></div>`+a.map((x,i)=>`<div class="adminRow resultRow"><span>${i+1}</span><span>${esc(x.name)}</span><span>${x.score}</span><span>${esc(x.timeUsed)}</span><span>${esc(x.pct)}%</span><span>${esc(x.completed)}</span></div>`).join(""):"No saved results."}
+function downloadCSV(){let a=JSON.parse(localStorage.getItem("bikash_results")||"[]"),rows=[["Rank","Candidate Name","Score","Time Used","Percentage","Date"],...a.map((x,i)=>[i+1,x.name,x.score,x.timeUsed,x.pct+"%",x.completed])];let csv="\uFEFF"+rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n"),blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),u=URL.createObjectURL(blob),aEl=document.createElement("a");aEl.href=u;aEl.download="bikash-academy-results.csv";aEl.click();URL.revokeObjectURL(u)}
+function editor(){let e=document.getElementById("editor");e.innerHTML=`<div class="editQ"><h3>Question & Answer-Key Editor</h3><p class="small">Admin can edit every question, option and correct option. Changes are saved only on this device.</p>${QUESTIONS.map((q,i)=>`<details><summary>Q${i+1}</summary><textarea id="q${i}">${q[0]}</textarea>${q[1].map((o,j)=>`<input id="o${i}_${j}" value="${o.replace(/"/g,"&quot;")}">`).join("")}<select id="a${i}" style="width:100%;padding:10px;background:#020305;color:#fff"><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select></details>`).join("")}<button class="startBtn" id="saveEdit">SAVE QUESTION SET</button></div>`;QUESTIONS.forEach((q,i)=>document.getElementById("a"+i).value=q[2]);document.getElementById("saveEdit").onclick=()=>{QUESTIONS.forEach((q,i)=>{q[0]=document.getElementById("q"+i).value;q[1]=[0,1,2,3].map(j=>document.getElementById("o"+i+"_"+j).value);q[2]=+document.getElementById("a"+i).value});alert("Question set and answer keys saved on this device.")}}
+document.getElementById("adminBtn").addEventListener("click",function(e){e.preventDefault();admin();});
+const correctBtn=document.getElementById("correctBtn");
+correctBtn.addEventListener("click",function(e){e.preventDefault();correctBtn.classList.remove("flash");void correctBtn.offsetWidth;correctBtn.classList.add("flash");let old=document.getElementById("correctToast");if(old)old.remove();let t=document.createElement("div");t.id="correctToast";t.textContent="YOUR CORRECT "+(state.correct||0)+" OUT OF "+QUESTIONS.length;t.style.cssText="position:fixed;top:72px;left:50%;transform:translateX(-50%);z-index:9999;background:#06110a;color:#20ff72;border:2px solid #20ff72;border-radius:14px;padding:12px 18px;font-weight:1000;box-shadow:0 0 25px #20ff7255";document.body.appendChild(t);setTimeout(()=>t.remove(),1400);});
+const themeBtn=document.getElementById("themeBtn");
+function applyTheme(on){document.body.classList.toggle("altTheme",!!on);document.documentElement.style.setProperty("--neon",on?"#ff4dff":"#00eaff");document.documentElement.style.setProperty("--green",on?"#7dff00":"#20ff72");themeBtn.textContent=on?"☀ THEME":"☾ THEME";try{localStorage.setItem("bikash_theme",on?"alt":"default")}catch(e){}}
+themeBtn.addEventListener("click",function(e){e.preventDefault();applyTheme(!document.body.classList.contains("altTheme"));});
+try{applyTheme(localStorage.getItem("bikash_theme")==="alt")}catch(e){applyTheme(false)}
+startScreen();
+function toggleTheme(){
+ const light=!document.body.classList.contains('lightTheme');
+ document.body.classList.toggle('lightTheme',light);
+ localStorage.setItem('bikashTheme',light?'light':'dark');
+ const b=document.getElementById('themeBtn');
+ if(b){b.textContent=light?'☀ THEME':'☾ THEME';b.classList.toggle('themeActive',light);}
+}document.addEventListener('DOMContentLoaded',function(){
+ const saved=localStorage.getItem('bikashTheme');
+ const b=document.getElementById('themeBtn');
+ if(saved==='light') document.body.classList.add('lightTheme');
+ if(b){
+   b.textContent=saved==='light'?'☀ THEME':'☾ THEME';
+   b.classList.toggle('themeActive',saved==='light');
+   b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleTheme();});
+ }
+});let warningSoundPlayed=false;
+function playWarningSound(){
+ try{
+  const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+  const c=new AC(),t=c.currentTime,m=c.createGain();m.gain.value=1;m.connect(c.destination);
+  [0,.22,.44,.66].forEach((d,i)=>{
+   const o=c.createOscillator(),g=c.createGain();
+   o.type=i%2?'square':'sine';o.frequency.value=i%2?880:660;
+   g.gain.setValueAtTime(1,t+d);g.gain.exponentialRampToValueAtTime(.001,t+d+.16);
+   o.connect(g);g.connect(m);o.start(t+d);o.stop(t+d+.17);
+  });
+  setTimeout(()=>c.close(),1200);
+ }catch(e){}
+}
+setInterval(function(){
+ try{
+  if(typeof state!=='undefined' && state.startAt && !warningSoundPlayed){
+   const left=Math.max(0,15*60-Math.floor((Date.now()-state.startAt)/1000));
+   if(left<=300 && left>0){warningSoundPlayed=true;playWarningSound();}
+  }
+ }catch(e){}
+},1000);
+function updateCorrectDisplay(){
+  const n = (typeof state !== 'undefined' && Array.isArray(state.answers))
+    ? state.answers.reduce((sum,a,i)=>sum + (a !== null && a !== undefined && a === QUESTIONS[i][2] ? 1 : 0),0)
+    : 0;
+  document.querySelectorAll('#correctBtn,.correctBtn,.correct-counter').forEach(el=>{
+    el.textContent = 'CORRECT ' + n;
+  });
+}
+function updateProgressDisplay(){
+  if(typeof state==='undefined') return;
+  const list = state.revision ? state.revision : QUESTIONS;
+  const total = list.length;
+  const current = (typeof state.idx==='number' ? state.idx : 0) + 1;
+  const txt = current + '/' + total;
+  document.querySelectorAll('#progressText,.progressText,.progress-label,.progress').forEach(el=>{
+    if(el.dataset && el.dataset.progressBar==='true') return;
+    if(el.textContent && /\d+\s*\/\s*\d+/.test(el.textContent)) el.textContent=txt;
+  });
+}
+
+
+document.addEventListener('click',function(e){
+  const opt=e.target.closest('.option, .optionCard, [data-option], label');
+  if(opt){
+    setTimeout(()=>{try{updateCorrectDisplay();}catch(_){ }},20);
+  }
+});
+
+
+setInterval(function(){
+  try{
+    updateCorrectDisplay();
+    if(typeof updateProgressDisplay==='function') updateProgressDisplay();
+  }catch(e){}
+},300);
+
+
+function renderRevisionProgress(){
+  if(typeof state==='undefined' || !state.revision) return;
+  const total = Array.isArray(state.revisionQuestions) ? state.revisionQuestions.length :
+                (Array.isArray(state.revision) ? state.revision.length : 0);
+  if(!total) return;
+  const current = (typeof state.idx==='number' ? state.idx : 0)+1;
+  let b=document.getElementById('revisionProgressBadge');
+  if(!b){
+    b=document.createElement('div');
+    b.id='revisionProgressBadge';
+    b.style.cssText='position:fixed;left:50%;top:78px;transform:translateX(-50%);z-index:9999;font-weight:1000;font-size:18px;padding:7px 14px;border-radius:999px;background:rgba(0,0,0,.82);color:#00ffd0;border:1px solid rgba(0,255,208,.45);box-shadow:0 0 15px rgba(0,255,208,.2);pointer-events:none;';
+    document.body.appendChild(b);
+  }
+  b.textContent=current+'/'+total;
+}
+setInterval(()=>{try{renderRevisionProgress();}catch(e){}},250);
+
+</script>
+</body></html>
