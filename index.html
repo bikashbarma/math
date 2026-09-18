@@ -466,48 +466,57 @@ function parseCentralDateTime(value, baseDate){
 function formatCentralTimeUsed(raw,startExam,completedAt,resultDuration){
   const maxDuration=(Number(resultDuration)>0?Number(resultDuration):DURATION);
 
-  // Best source: actual start/submission timestamps.
+  // CENTRAL SCOREBOARD'S NORMAL FORMAT:
+  // New records store Time Used as elapsed seconds. Display it as MM:SS
+  // (or H:MM:SS for durations of one hour or more).
+  if(raw!==null && raw!==undefined){
+    if(typeof raw === "number" && Number.isFinite(raw)){
+      const sec=Math.floor(raw);
+      if(sec>=0 && sec<=maxDuration) return formatTime(sec);
+    }
+
+    const v=String(raw).trim();
+    if(v){
+      // Numeric strings are also elapsed seconds.
+      if(/^\d+(?:\.\d+)?$/.test(v)){
+        const sec=Math.floor(Number(v));
+        if(sec>=0 && sec<=maxDuration) return formatTime(sec);
+      }
+
+      // Existing Central-style duration text: MM:SS or H:MM:SS.
+      let m=v.match(/^(\d+):(\d{2})(?::(\d{2}))?$/);
+      if(m){
+        const sec=m[3]!==undefined
+          ? Number(m[1])*3600+Number(m[2])*60+Number(m[3])
+          : Number(m[1])*60+Number(m[2]);
+        if(sec>=0 && sec<=maxDuration) return formatTime(sec);
+      }
+
+      // Older Google-Sheet date-formatted duration values can arrive as
+      // 1899-12-31T... . Treat the clock portion as a duration ONLY when
+      // it is within this test's allowed duration; never invent a duration.
+      m=v.match(/(?:^|T)(\d{1,2}):(\d{2}):(\d{2})(?:\.\d+)?(?:Z|$)/i);
+      if(m){
+        const sec=Number(m[1])*3600+Number(m[2])*60+Number(m[3]);
+        if(sec>=0 && sec<=maxDuration) return formatTime(sec);
+      }
+    }
+  }
+
+  // Fallback only when actual start/end timestamps are supplied by the
+  // Central API. This is deliberately secondary to the original Time Used
+  // value so the Central Scoreboard format remains unchanged.
   let endMs=parseCentralDateTime(completedAt);
-  let startMs=parseCentralDateTime(startExam, endMs);
+  let startMs=parseCentralDateTime(startExam,endMs);
   if(Number.isFinite(startMs) && Number.isFinite(endMs)){
-    // If only clock times were supplied and the exam crossed midnight, account for it.
     if(endMs<startMs && (startMs-endMs)<24*3600*1000) endMs+=24*3600*1000;
     const elapsed=Math.floor((endMs-startMs)/1000);
     if(elapsed>=0 && elapsed<=maxDuration) return formatTime(elapsed);
   }
 
-  if(raw===null||raw===undefined||raw==="")return "—";
-
-  // New records normally arrive as seconds.
-  if(typeof raw==="number" && isFinite(raw)){
-    return raw>=0 && raw<=maxDuration ? formatTime(raw) : "—";
-  }
-
-  const v=String(raw).trim();
-  if(!v)return "—";
-
-  // Plain MM:SS or HH:MM:SS duration.
-  const parts=v.split(":").map(Number);
-  if(parts.length===2 && parts.every(Number.isFinite)){
-    const total=parts[0]*60+parts[1];
-    return total<=maxDuration && total>=0 ? formatTime(total) : "—";
-  }
-  if(parts.length===3 && parts.every(Number.isFinite)){
-    const total=parts[0]*3600+parts[1]*60+parts[2];
-    return total<=maxDuration && total>=0 ? formatTime(total) : "—";
-  }
-
-  // Some older Google Sheet date-formatted duration cells come back as an ISO
-  // date around 1899/1900. Treat only the clock portion as a duration, and only
-  // when it is within the configured exam duration.
-  const iso=v.match(/^(1899|1900)-\d{2}-\d{2}T(\d{2}):(\d{2}):(\d{2})(?:\.\d+)?(?:Z)?$/i);
-  if(iso){
-    const total=Number(iso[2])*3600+Number(iso[3])*60+Number(iso[4]);
-    return total>=0 && total<=maxDuration ? formatTime(total) : "—";
-  }
-
   return "—";
 }
+
 function sectionFor(q){ return "MATHEMATICS / ARITHMETIC • GEOMETRY • TRIANGLES • MENSURATION"; }
 
 function render(){if(revisionMode){$("revisionBanner")?.classList.add("show");$("timer").textContent="00:00";}else{$("revisionBanner")?.classList.remove("show");}
