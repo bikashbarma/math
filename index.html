@@ -599,17 +599,31 @@ function closeViewQuestions(){
   if(view)view.classList.add("hidden");
 }
 
-async function startExam(){
+function startExam(){
   const n=$("candidate").value.trim();
   if(!n){$("candidate").focus();return}
+
+  // Start immediately from the user's tap. Do not wait for the central
+  // test registry/network, so WhatsApp/GitHub mobile launches remain smooth.
+  // The configured duration is refreshed in the background.
   const startBtn=$("startBtn");
   if(startBtn)startBtn.disabled=true;
-  await loadConfiguredExamDuration();
   ensureAudio();
-  candidate=n;idx=0;answers={};submitted=false;warningGiven=false;startAt=Date.now();examStartAt=new Date(startAt).toISOString();
-  $("start").classList.add("hidden");$("result").classList.add("hidden");$("admin").classList.add("hidden");$("exam").classList.remove("hidden");
+  candidate=n;idx=0;answers={};submitted=false;warningGiven=false;
+  startAt=Date.now();
+  examStartAt=new Date(startAt).toISOString();
+  $("start").classList.add("hidden");
+  $("result").classList.add("hidden");
+  $("admin").classList.add("hidden");
+  $("exam").classList.remove("hidden");
+  render();
+  timerHandle=setInterval(tick,250);
+  tick();
   if(startBtn)startBtn.disabled=false;
-  render();timerHandle=setInterval(tick,250);tick();
+
+  // Fetch the Multi-Test duration after the exam has already started.
+  // If the central registry is unavailable, the current/default duration remains.
+  loadConfiguredExamDuration().catch(()=>{});
 }
 
 function tick(){
