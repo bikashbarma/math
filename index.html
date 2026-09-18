@@ -90,12 +90,17 @@ th{color:var(--muted);font-size:12px}
 .status{margin-top:10px;text-align:center;font-size:12px;font-weight:1000}
 #fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1000}
 @media(max-width:700px){
- .topbar{height:62px;padding:7px 8px}
+ .topbar{height:62px;padding:6px 6px;grid-template-columns:auto 1fr auto;gap:4px;overflow:visible}
+ .leftbox{min-width:0;overflow:visible}
+ .topButtons{gap:4px;flex-wrap:nowrap}
  .screen,.exam,.result,.admin{inset:62px 0 0}
  .exam{height:calc(100dvh - 62px);padding:7px 8px}
- .themeBtn,.adminBtn,.correctBtn{font-size:10px;padding:8px 8px;border-radius:9px}
- .correctBtn{min-width:90px}
- .timer{font-size:16px}
+ .themeBtn,.adminBtn,.correctBtn{font-size:9px;padding:7px 6px;border-radius:9px;letter-spacing:0}
+ .viewBtn{display:inline-flex!important;visibility:visible!important;opacity:1!important;font-size:8px;padding:7px 5px}
+ .correctBtn{min-width:68px;padding-left:5px;padding-right:5px}
+ .centerbox{min-width:68px}
+ .timer{font-size:15px}
+ .adminBtn{font-size:8px;padding:7px 5px}
  .startCard{padding:23px}
  .options{grid-template-columns:1fr;gap:7px}
  .opt{min-height:49px;padding:9px 11px}
@@ -104,6 +109,15 @@ th{color:var(--muted);font-size:12px}
  .next{height:52px;width:100%}
  .stats{grid-template-columns:repeat(2,1fr)}
  .result,.admin{padding:10px}
+}
+@media(max-width:360px){
+ .topbar{padding-left:4px;padding-right:4px;gap:2px}
+ .topButtons{gap:2px}
+ .themeBtn{font-size:8px;padding:6px 4px}
+ .viewBtn{font-size:7px;padding:6px 4px}
+ .adminBtn{font-size:7px;padding:6px 4px}
+ .correctBtn{font-size:8px;min-width:62px}
+ .timer{font-size:14px}
 }
 @media(max-height:620px) and (orientation:landscape){
  .question{font-size:15px;line-height:1.25}
@@ -407,53 +421,89 @@ function formatTime(sec){
   sec=Math.max(0,Math.floor(Number(sec)||0));
   if(sec>=3600){
     const h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),ss=sec%60;
-    return h+" hour"+(h===1?"":"s")+(m||ss?" "+String(m).padStart(2,"0")+":"+String(ss).padStart(2,"0"):"");
+    return h+":"+String(m).padStart(2,"0")+":"+String(ss).padStart(2,"0");
   }
-  return String(Math.floor(sec/60)).padStart(2,"0")+":"+String(sec%60).padStart(2,"0")+" Minutes";
+  return String(Math.floor(sec/60)).padStart(2,"0")+":"+String(sec%60).padStart(2,"0");
+}
+
+function parseCentralDateTime(value, baseDate){
+  if(value===null || value===undefined || value==="") return NaN;
+  const v=String(value).trim();
+  if(!v) return NaN;
+
+  // ISO / normal browser date strings.
+  let t=Date.parse(v);
+  if(Number.isFinite(t)) return t;
+
+  // Common Central Sheet formats: DD/MM/YYYY HH:mm:ss, DD/MM/YYYY hh:mm AM/PM,
+  // and similar comma-separated variants.
+  let m=v.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{2,4})(?:[ ,T]+(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)?)?$/i);
+  if(m){
+    let day=Number(m[1]), mon=Number(m[2])-1, year=Number(m[3]);
+    if(year<100) year+=2000;
+    let hh=Number(m[4]||0), mm=Number(m[5]||0), ss=Number(m[6]||0);
+    const ap=(m[7]||"").toUpperCase();
+    if(ap){ if(hh===12) hh=0; if(ap==="PM") hh+=12; }
+    const d=new Date(year,mon,day,hh,mm,ss,0);
+    return Number.isFinite(d.getTime())?d.getTime():NaN;
+  }
+
+  // Time-only value such as 02:40 PM. Combine it with the supplied base date.
+  m=v.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)?$/i);
+  if(m && baseDate){
+    const b=new Date(baseDate);
+    if(Number.isFinite(b.getTime())){
+      let hh=Number(m[1]), mm=Number(m[2]), ss=Number(m[3]||0);
+      const ap=(m[4]||"").toUpperCase();
+      if(ap){ if(hh===12) hh=0; if(ap==="PM") hh+=12; }
+      b.setHours(hh,mm,ss,0);
+      return b.getTime();
+    }
+  }
+  return NaN;
 }
 
 function formatCentralTimeUsed(raw,startExam,completedAt,resultDuration){
-  // Safest source: calculate elapsed time from this result's start/submission timestamps.
-  if(startExam && completedAt){
-    const a=Date.parse(String(startExam));
-    const b=Date.parse(String(completedAt));
-    if(Number.isFinite(a) && Number.isFinite(b)){
-      const elapsed=Math.floor((b-a)/1000);
-      const maxDuration=(Number(resultDuration)>0?Number(resultDuration):DURATION);
-      if(elapsed>=0)return formatTime(Math.min(maxDuration,elapsed));
-    }
+  const maxDuration=(Number(resultDuration)>0?Number(resultDuration):DURATION);
+
+  // Best source: actual start/submission timestamps.
+  let endMs=parseCentralDateTime(completedAt);
+  let startMs=parseCentralDateTime(startExam, endMs);
+  if(Number.isFinite(startMs) && Number.isFinite(endMs)){
+    // If only clock times were supplied and the exam crossed midnight, account for it.
+    if(endMs<startMs && (startMs-endMs)<24*3600*1000) endMs+=24*3600*1000;
+    const elapsed=Math.floor((endMs-startMs)/1000);
+    if(elapsed>=0 && elapsed<=maxDuration) return formatTime(elapsed);
   }
 
   if(raw===null||raw===undefined||raw==="")return "—";
 
+  // New records normally arrive as seconds.
   if(typeof raw==="number" && isFinite(raw)){
-    const maxDuration=(Number(resultDuration)>0?Number(resultDuration):DURATION);
-    if(raw>=0 && raw<=maxDuration)return formatTime(raw);
-    return "—";
+    return raw>=0 && raw<=maxDuration ? formatTime(raw) : "—";
   }
 
   const v=String(raw).trim();
+  if(!v)return "—";
 
+  // Plain MM:SS or HH:MM:SS duration.
   const parts=v.split(":").map(Number);
   if(parts.length===2 && parts.every(Number.isFinite)){
     const total=parts[0]*60+parts[1];
-    const maxDuration=(Number(resultDuration)>0?Number(resultDuration):DURATION);
-    return total<=maxDuration?formatTime(total):"—";
+    return total<=maxDuration && total>=0 ? formatTime(total) : "—";
   }
   if(parts.length===3 && parts.every(Number.isFinite)){
     const total=parts[0]*3600+parts[1]*60+parts[2];
-    const maxDuration=(Number(resultDuration)>0?Number(resultDuration):DURATION);
-    return total<=maxDuration?formatTime(total):"—";
+    return total<=maxDuration && total>=0 ? formatTime(total) : "—";
   }
 
-  // If an old Central result contains an ISO Date-like duration, never
-  // invent an 18/19-hour exam time. Use it only when it is already <=60 min.
-  const iso=v.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d+)?Z?$/);
+  // Some older Google Sheet date-formatted duration cells come back as an ISO
+  // date around 1899/1900. Treat only the clock portion as a duration, and only
+  // when it is within the configured exam duration.
+  const iso=v.match(/^(1899|1900)-\d{2}-\d{2}T(\d{2}):(\d{2}):(\d{2})(?:\.\d+)?(?:Z)?$/i);
   if(iso){
-    const h=Number(iso[4]),m=Number(iso[5]),sec=Number(iso[6]);
-    const total=h*3600+m*60+sec;
-    const maxDuration=(Number(resultDuration)>0?Number(resultDuration):DURATION);
-    return total<=maxDuration?formatTime(total):"—";
+    const total=Number(iso[2])*3600+Number(iso[3])*60+Number(iso[4]);
+    return total>=0 && total<=maxDuration ? formatTime(total) : "—";
   }
 
   return "—";
